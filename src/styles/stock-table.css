@@ -1,0 +1,76 @@
+.stock-table {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.stock-table__title {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+.stock-table__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.stock-table__table thead tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.stock-table__table th {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: #555;
+  letter-spacing: 0.12em;
+  text-align: left;
+  padding: 0.5rem 0.8rem;
+  text-transform: uppercase;
+}
+
+.stock-table__table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.15s;
+}
+
+.stock-table__table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.row--alt {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.stock-table__table td {
+  padding: 0.7rem 0.8rem;
+}
+
+.cell--sku {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--orange);
+}
+
+.cell--name {
+  font-size: 0.85rem;
+}
+
+.cell--warehouse {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: #666;
+}
+
+.cell--qty {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.cell--reorder {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: #555;
+}
