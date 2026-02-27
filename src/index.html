@@ -3,13 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INVENTORY</title>
-    <link rel='stylesheet'href="./index.css">
+    <title>Inventory Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-    <header>
-        <p>Inventory Manager</p>
+
+    <!-- Header / Nav -->
+    <header class="nav">
+        <div class="nav__logo">INV<span>▸</span>MGR</div>
+        <nav class="nav__links">
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">Docs</a>
+            <a href="#" class="nav__cta">Get Started →</a>
+        </nav>
     </header>
-    
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero__tag">[ STOCK CONTROL SYSTEM v2.0 ]</div>
+        <h1 class="hero__title">
+            <span class="hero__title--line">KNOW WHAT</span>
+            <span class="hero__title--line accent">YOU HAVE.</span>
+            <span class="hero__title--line">ALWAYS.</span>
+        </h1>
+        <p class="hero__sub">
+            Real-time inventory tracking, low-stock alerts, and supply chain visibility — 
+            built for teams that can't afford surprises.
+        </p>
+        <div class="hero__actions">
+            <a href="#" class="btn btn--primary">Start for free</a>
+            <a href="#" class="btn btn--ghost">Watch demo ↗</a>
+        </div>
+        <div class="hero__stats">
+            <div class="stat">
+                <span class="stat__num">12K+</span>
+                <span class="stat__label">Active warehouses</span>
+            </div>
+            <div class="stat__divider"></div>
+            <div class="stat">
+                <span class="stat__num">99.9%</span>
+                <span class="stat__label">Uptime SLA</span>
+            </div>
+            <div class="stat__divider"></div>
+            <div class="stat">
+                <span class="stat__num">3M+</span>
+                <span class="stat__label">SKUs tracked daily</span>
+            </div>
+        </div>
+
+        <!-- Decorative grid lines -->
+        <div class="hero__grid" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <!-- Floating ticker -->
+        <div class="ticker" aria-hidden="true">
+            <div class="ticker__track">
+                <span>LOW STOCK ALERT: SKU-4821 ▸ REORDER PENDING: SKU-0093 ▸ SHIPMENT RECEIVED: WH-07 ▸ AUDIT COMPLETE: ZONE C ▸ LOW STOCK ALERT: SKU-4821 ▸ REORDER PENDING: SKU-0093 ▸ SHIPMENT RECEIVED: WH-07 ▸ AUDIT COMPLETE: ZONE C ▸</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="features__header">
+            <p class="label">// CORE CAPABILITIES</p>
+            <h2>Everything you need to run tight operations.</h2>
+        </div>
+        <div class="features__grid">
+            <div class="feature-card">
+                <div class="feature-card__icon">◈</div>
+                <h3>Real-Time Tracking</h3>
+                <p>Every item, every location, every movement — logged instantly across all your warehouses.</p>
+            </div>
+            <div class="feature-card feature-card--accent">
+                <div class="feature-card__icon">⚑</div>
+                <h3>Smart Alerts</h3>
+                <p>Automated low-stock and expiry notifications so your team acts before a shortage hits.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-card__icon">⊞</div>
+                <h3>Multi-Warehouse</h3>
+                <p>Manage unlimited locations from one dashboard. Transfer stock with two clicks.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-card__icon">⇌</div>
+                <h3>Integrations</h3>
+                <p>Connect your POS, ERP, and e-commerce store. We speak Shopify, SAP, and everything between.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-card__icon">▦</div>
+                <h3>Audit Trails</h3>
+                <p>Full history on every SKU. Know who moved what, when, and why — always audit-ready.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-card__icon">◎</div>
+                <h3>Reporting</h3>
+                <p>Turn raw stock data into clear insights. Shrinkage, turnover, reorder points — at a glance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+        <div class="cta-banner__inner">
+            <p class="label">[ READY TO SHIP? ]</p>
+            <h2>Start tracking in under 5 minutes.</h2>
+            <a href="#" class="btn btn--primary btn--large">Create free account →</a>
+        </div>
+        <div class="cta-banner__deco" aria-hidden="true">INVENTORY</div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__logo">INV<span>▸</span>MGR</div>
+        <p class="footer__copy">© 2025 Inventory Manager. All rights reserved.</p>
+        <div class="footer__links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Contact</a>
+        </div>
+    </footer>
+
 </body>
 </html>
