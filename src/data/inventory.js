@@ -1,4 +1,4 @@
-export const INVENTORY = [
+export const INITIAL_INVENTORY = [
   { sku: "SKU-0042", name: "Wireless Keyboard",     qty: 3,   reorder: 10,  unit: "pcs",   warehouse: "WH-01" },
   { sku: "SKU-0093", name: "USB-C Hub 7-Port",      qty: 0,   reorder: 5,   unit: "pcs",   warehouse: "WH-01" },
   { sku: "SKU-0187", name: "Ergonomic Mouse",        qty: 24,  reorder: 8,   unit: "pcs",   warehouse: "WH-02" },
@@ -11,19 +11,6 @@ export const INVENTORY = [
   { sku: "SKU-0821", name: "Cable Management Kit",   qty: 31,  reorder: 10,  unit: "pcs",   warehouse: "WH-01" },
 ];
 
-export const SYSTEM_PROMPT = `You are an inventory management assistant. You have access to the following live stock data:
-
-${JSON.stringify(INVENTORY, null, 2)}
-
-Fields: sku, name, qty (current quantity), reorder (reorder threshold), unit, warehouse.
-
-When answering:
-- Be concise and direct — this is a dashboard tool, not a chat app
-- Flag items where qty <= reorder as LOW STOCK or OUT OF STOCK
-- Use the SKU codes when referencing items
-- Suggest reorder actions when relevant
-- Format lists clearly but briefly`;
-
 export const QUICK_PROMPTS = [
   "What's out of stock or critically low?",
   "Which warehouse has the most issues?",
@@ -32,3 +19,5 @@ export const QUICK_PROMPTS = [
 ];
 
 export const TICKER_TEXT = "LOW STOCK ALERT: SKU-4821 ▸ REORDER PENDING: SKU-0093 ▸ SHIPMENT RECEIVED: WH-07 ▸ AUDIT COMPLETE: ZONE C ▸ ";
+
+export const WAREHOUSES = ["WH-01", "WH-02", "WH-03"];

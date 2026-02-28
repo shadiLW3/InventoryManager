@@ -4,11 +4,72 @@
   padding: 1.5rem;
 }
 
+.stock-table__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
 .stock-table__title {
   font-family: var(--display);
   font-size: 1.6rem;
   letter-spacing: 0.06em;
-  margin-bottom: 1rem;
+}
+
+.stock-table__filters {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.stock-table__filter-group {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.stock-table__filter {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 2px;
+  color: #555;
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+
+.stock-table__filter:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.stock-table__filter--active {
+  background: var(--orange);
+  color: var(--dark);
+  border-color: var(--orange);
+}
+
+.stock-table__select {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 2px;
+  color: var(--muted);
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.stock-table__count {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: #444;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.8rem;
 }
 
 .stock-table__table {
@@ -73,4 +134,54 @@
   font-family: var(--mono);
   font-size: 0.72rem;
   color: #555;
+}
+
+.cell--actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.action-btn {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.action-btn--edit {
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.action-btn--edit:hover {
+  color: var(--orange);
+  border-color: var(--orange);
+}
+
+.action-btn--delete {
+  color: #666;
+  border: 1px solid var(--border);
+}
+
+.action-btn--delete:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.action-btn--confirm {
+  color: var(--dark);
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.stock-table__empty {
+  text-align: center;
+  padding: 3rem 1rem !important;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: #444;
+  letter-spacing: 0.1em;
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
-import { Logo, MonoLabel } from './ui';
-import { TICKER_TEXT, INVENTORY } from '../data/inventory';
+import { MonoLabel, Logo } from './ui';
+import { TICKER_TEXT, INITIAL_INVENTORY } from '../data/inventory';
 import '../styles/landing.css';
 
 const FEATURES = [
@@ -28,8 +28,6 @@ export default function LandingPage({ onEnterApp }) {
     transform: visible ? "translateY(0)" : "translateY(24px)",
     transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
   });
-
-  const lowCount = INVENTORY.filter(i => i.qty <= i.reorder).length;
 
   return (
     <div className="landing">
@@ -75,7 +73,6 @@ export default function LandingPage({ onEnterApp }) {
           </div>
         </div>
 
-        {/* Ticker */}
         <div className="ticker" aria-hidden="true">
           <div className="ticker__track">{TICKER_TEXT.repeat(4)}</div>
         </div>

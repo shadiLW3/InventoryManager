@@ -1,14 +1,111 @@
 import { useState, useRef, useEffect } from 'react';
-import { INVENTORY, SYSTEM_PROMPT, QUICK_PROMPTS } from '../data/inventory';
+import { useInventory } from '../context/InventoryContext';
+import { QUICK_PROMPTS } from '../data/inventory';
 import '../styles/chat.css';
 
+/* Simple markdown-ish renderer */
+function renderMarkdown(text) {
+  const lines = text.split('\n');
+  const elements = [];
+  let listItems = [];
+
+  function flushList() {
+    if (listItems.length > 0) {
+      elements.push(
+        <ul key={`list-${elements.length}`} className="chat__md-list">
+          {listItems.map((li, i) => <li key={i}>{processInline(li)}</li>)}
+        </ul>
+      );
+      listItems = [];
+    }
+  }
+
+  function processInline(str) {
+    const parts = [];
+    const regex = /\*\*(.+?)\*\*/g;
+    let last = 0;
+    let match;
+    while ((match = regex.exec(str)) !== null) {
+      if (match.index > last) parts.push(str.slice(last, match.index));
+      parts.push(<strong key={match.index}>{match[1]}</strong>);
+      last = regex.lastIndex;
+    }
+    if (last < str.length) parts.push(str.slice(last));
+    return parts.length > 0 ? parts : str;
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    if (line.startsWith('- ') || line.startsWith('• ')) {
+      listItems.push(line.slice(2));
+      continue;
+    }
+
+    flushList();
+
+    if (line.trim() === '') {
+      elements.push(<br key={`br-${i}`} />);
+    } else {
+      elements.push(<p key={`p-${i}`} className="chat__md-p">{processInline(line)}</p>);
+    }
+  }
+  flushList();
+
+  return elements;
+}
+
+/* Typing animation hook */
+function useTypingEffect(text, speed = 12, enabled = true) {
+  const [displayed, setDisplayed] = useState(enabled ? "" : text);
+  const [done, setDone] = useState(!enabled);
+
+  useEffect(() => {
+    if (!enabled) {
+      setDisplayed(text);
+      setDone(true);
+      return;
+    }
+    setDisplayed("");
+    setDone(false);
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setDisplayed(text.slice(0, i));
+      if (i >= text.length) {
+        clearInterval(interval);
+        setDone(true);
+      }
+    }, speed);
+    return () => clearInterval(interval);
+  }, [text, speed, enabled]);
+
+  return { displayed, done };
+}
+
+function TypedMessage({ text }) {
+  const { displayed, done } = useTypingEffect(text, 8, true);
+  return (
+    <div className="chat__md">
+      {renderMarkdown(displayed)}
+      {!done && <span className="chat__cursor">▊</span>}
+    </div>
+  );
+}
+
+function StaticMessage({ text }) {
+  return <div className="chat__md">{renderMarkdown(text)}</div>;
+}
+
 export default function ChatPanel() {
+  const { inventory, getSystemPrompt } = useInventory();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [latestIdx, setLatestIdx] = useState(-1);
   const bottomRef = useRef(null);
 
-  const lowStockCount = INVENTORY.filter(i => i.qty <= i.reorder).length;
+  const lowStockCount = inventory.filter(i => i.qty <= i.reorder).length;
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -36,13 +133,13 @@ export default function ChatPanel() {
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
           max_tokens: 1000,
-          system: SYSTEM_PROMPT,
+          system: getSystemPrompt(),
           messages: newHistory,
         }),
       });
       const data = await res.json();
-      console.log("API response:", data);
       const reply = data.content?.[0]?.text || "No response.";
+      setLatestIdx(newHistory.length);
       setMessages(prev => [...prev, { role: "assistant", content: reply }]);
     } catch (e) {
       setMessages(prev => [...prev, { role: "assistant", content: `Error: ${e.message}` }]);
@@ -56,6 +153,11 @@ export default function ChatPanel() {
       e.preventDefault();
       send();
     }
+  }
+
+  function clearChat() {
+    setMessages([]);
+    setLatestIdx(-1);
   }
 
   return (
@@ -72,15 +174,24 @@ export default function ChatPanel() {
             {p}
           </button>
         ))}
+        {messages.length > 0 && (
+          <button className="chat__prompt-btn chat__prompt-btn--clear" onClick={clearChat}>
+            ✕ Clear chat
+          </button>
+        )}
       </div>
 
       {/* Messages */}
       <div className="chat__messages">
         {messages.length === 0 && (
           <div className="chat__empty">
+            <div className="chat__empty-icon">◈</div>
             <div className="chat__empty-title">ASK THE AI</div>
             <div className="chat__empty-sub">
-              {INVENTORY.length} SKUs loaded · {lowStockCount} alerts active
+              {inventory.length} SKUs loaded · {lowStockCount} alerts active
+            </div>
+            <div className="chat__empty-hint">
+              Try a quick prompt above or type your own question
             </div>
           </div>
         )}
@@ -91,7 +202,11 @@ export default function ChatPanel() {
               {m.role === "user" ? "YOU" : "INV▸MGR AI"}
             </div>
             <div className={`chat__msg-bubble chat__msg-bubble--${m.role}`}>
-              {m.content}
+              {m.role === "assistant" ? (
+                i === latestIdx ? <TypedMessage text={m.content} /> : <StaticMessage text={m.content} />
+              ) : (
+                m.content
+              )}
             </div>
           </div>
         ))}
@@ -100,7 +215,9 @@ export default function ChatPanel() {
           <div className="chat__msg chat__msg--assistant">
             <div className="chat__msg-label">INV▸MGR AI</div>
             <div className="chat__msg-bubble chat__msg-bubble--loading">
-              PROCESSING...
+              <span className="chat__loading-dots">
+                <span>●</span><span>●</span><span>●</span>
+              </span>
             </div>
           </div>
         )}

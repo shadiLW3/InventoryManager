@@ -31,6 +31,16 @@
   border-color: rgba(255, 255, 255, 0.2);
 }
 
+.chat__prompt-btn--clear {
+  color: var(--red);
+  border-color: rgba(255, 68, 68, 0.2);
+}
+
+.chat__prompt-btn--clear:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+
 /* Messages */
 .chat__messages {
   flex: 1;
@@ -45,13 +55,22 @@
   margin: auto;
   text-align: center;
   color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chat__empty-icon {
+  font-size: 2.5rem;
+  color: rgba(255, 131, 48, 0.3);
+  margin-bottom: 0.5rem;
 }
 
 .chat__empty-title {
   font-family: var(--display);
   font-size: 2.5rem;
   letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
 }
 
 .chat__empty-sub {
@@ -60,10 +79,19 @@
   letter-spacing: 0.1em;
 }
 
+.chat__empty-hint {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: #2a2a2a;
+  letter-spacing: 0.06em;
+  margin-top: 0.5rem;
+}
+
 .chat__msg {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  animation: slideUp 0.3s ease;
 }
 
 .chat__msg--user {
@@ -87,13 +115,13 @@
   padding: 0.8rem 1rem;
   font-size: 0.88rem;
   line-height: 1.65;
-  white-space: pre-wrap;
 }
 
 .chat__msg-bubble--user {
   background: rgba(255, 131, 48, 0.1);
   border: 1px solid rgba(255, 131, 48, 0.2);
   color: var(--text);
+  white-space: pre-wrap;
 }
 
 .chat__msg-bubble--assistant {
@@ -105,11 +133,78 @@
 .chat__msg-bubble--loading {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  font-family: var(--mono);
-  font-size: 0.72rem;
+  padding: 0.8rem 1.2rem;
+}
+
+/* Loading dots */
+.chat__loading-dots {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.chat__loading-dots span {
+  font-size: 0.6rem;
   color: var(--orange);
-  letter-spacing: 0.15em;
-  animation: pulse 1.5s ease-in-out infinite;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.chat__loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.chat__loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Markdown styles */
+.chat__md {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.chat__md-p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.chat__md-p strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.chat__md-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.chat__md-list li {
+  position: relative;
+  padding-left: 1.2rem;
+  line-height: 1.6;
+}
+
+.chat__md-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--orange);
+  font-size: 0.8rem;
+}
+
+.chat__md-list li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.chat__cursor {
+  display: inline-block;
+  color: var(--orange);
+  font-size: 0.8rem;
+  animation: pulse 0.8s ease-in-out infinite;
 }
 
 /* Input Bar */
@@ -131,6 +226,10 @@
   font-family: var(--body);
   font-size: 0.88rem;
   line-height: 1.5;
+}
+
+.chat__input:focus {
+  border-color: rgba(255, 131, 48, 0.3);
 }
 
 .chat__input::placeholder {

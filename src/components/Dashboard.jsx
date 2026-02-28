@@ -2,12 +2,28 @@ import { useState } from 'react';
 import { Logo } from './ui';
 import StockTable from './StockTable';
 import ChatPanel from './ChatPanel';
-import { INVENTORY } from '../data/inventory';
+import Analytics from './Analytics';
+import ItemModal from './ItemModal';
+import { useInventory } from '../context/InventoryContext';
 import '../styles/dashboard.css';
 
 export default function Dashboard({ onBack }) {
   const [activeTab, setActiveTab] = useState("chat");
-  const lowStockItems = INVENTORY.filter(i => i.qty <= i.reorder);
+  const [showModal, setShowModal] = useState(false);
+  const [editItem, setEditItem] = useState(null);
+  const { inventory } = useInventory();
+
+  const lowStockItems = inventory.filter(i => i.qty <= i.reorder);
+
+  function handleEdit(item) {
+    setEditItem(item);
+    setShowModal(true);
+  }
+
+  function handleAdd() {
+    setEditItem(null);
+    setShowModal(true);
+  }
 
   return (
     <div className="dashboard">
@@ -20,16 +36,21 @@ export default function Dashboard({ onBack }) {
             <span className="dashboard__badge">AI CONSOLE</span>
           </div>
         </div>
-        <div className="dashboard__tabs">
-          {["chat", "stock"].map(tab => (
-            <button
-              key={tab}
-              className={`dashboard__tab ${activeTab === tab ? "dashboard__tab--active" : ""}`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
+        <div className="dashboard__header-right">
+          <div className="dashboard__tabs">
+            {["chat", "stock", "analytics"].map(tab => (
+              <button
+                key={tab}
+                className={`dashboard__tab ${activeTab === tab ? "dashboard__tab--active" : ""}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          {activeTab === "stock" && (
+            <button className="dashboard__add-btn" onClick={handleAdd}>+ ADD ITEM</button>
+          )}
         </div>
       </header>
 
@@ -50,8 +71,18 @@ export default function Dashboard({ onBack }) {
 
       {/* Content */}
       <div className="dashboard__content">
-        {activeTab === "stock" ? <StockTable /> : <ChatPanel />}
+        {activeTab === "chat" && <ChatPanel />}
+        {activeTab === "stock" && <StockTable onEdit={handleEdit} />}
+        {activeTab === "analytics" && <Analytics />}
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <ItemModal
+          item={editItem}
+          onClose={() => { setShowModal(false); setEditItem(null); }}
+        />
+      )}
     </div>
   );
 }
