@@ -88,7 +88,13 @@ export default function Analytics() {
                   axisLine={false}
                   tickLine={false}
                 />
-                <Tooltip contentStyle={CUSTOM_TOOLTIP_STYLE} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+                <Tooltip
+                contentStyle={CUSTOM_TOOLTIP_STYLE}
+                labelStyle={{ color: '#e8e8e0', fontFamily: "'DM Mono', monospace", fontSize: '0.72rem', marginBottom: '0.3rem' }}
+                itemStyle={{ color: '#e8e8e0', fontFamily: "'DM Mono', monospace", fontSize: '0.72rem' }}
+                wrapperStyle={{ outline: 'none' }}
+                cursor={{ fill: 'rgba(255,255,255,0.03)' }}
+                />
                 <Bar dataKey="ok" name="OK" fill={CHART_COLORS.ok} radius={[2, 2, 0, 0]} />
                 <Bar dataKey="low" name="Low" fill={CHART_COLORS.low} radius={[2, 2, 0, 0]} />
                 <Bar dataKey="out" name="Out" fill={CHART_COLORS.out} radius={[2, 2, 0, 0]} />
@@ -117,7 +123,12 @@ export default function Analytics() {
                     <Cell key={idx} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={CUSTOM_TOOLTIP_STYLE} />
+                <Tooltip
+                contentStyle={CUSTOM_TOOLTIP_STYLE}
+                labelStyle={{ display: 'none' }}
+                itemStyle={{ color: '#e8e8e0', fontFamily: "'DM Mono', monospace", fontSize: '0.72rem' }}
+                wrapperStyle={{ outline: 'none' }}
+                />
               </PieChart>
             </ResponsiveContainer>
             <div className="analytics__pie-legend">
