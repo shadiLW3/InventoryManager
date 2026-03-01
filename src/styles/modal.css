@@ -15,7 +15,7 @@
   border: 1px solid var(--border);
   border-radius: 4px;
   width: 90%;
-  max-width: 480px;
+  max-width: 520px;
   animation: slideUp 0.2s ease;
 }
 
@@ -147,4 +147,53 @@
   background: rgba(255, 131, 48, 0.3);
   border-color: rgba(255, 131, 48, 0.3);
   cursor: not-allowed;
+}
+
+.modal__field-empty {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #555;
+  letter-spacing: 0.04em;
+  padding: 0.6rem 0.75rem;
+  background: var(--dark);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+
+.modal__field input,
+.modal__field select {
+  width: 100%;
+  min-width: 0;
+}
+
+.modal__row,
+.modal__row--3 {
+  overflow: hidden;
+}
+
+
+@media (max-width: 500px) {
+  .modal {
+    width: 95%;
+    padding: 0;
+    overflow: hidden;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal__header {
+    padding: 1rem 1.2rem;
+  }
+
+  .modal__form {
+    padding: 1.2rem;
+  }
+
+  .modal__row {
+    grid-template-columns: 1fr;
+  }
+
+  .modal__row--3 {
+    grid-template-columns: 1fr 1fr 0.7fr;
+  }
 }

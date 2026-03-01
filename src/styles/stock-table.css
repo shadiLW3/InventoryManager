@@ -118,10 +118,10 @@
   font-size: 0.85rem;
 }
 
-.cell--warehouse {
+.cell--location {
   font-family: var(--mono);
   font-size: 0.7rem;
-  color: #666;
+  color: #888;
 }
 
 .cell--qty {
@@ -184,4 +184,10 @@
   font-size: 0.72rem;
   color: #444;
   letter-spacing: 0.1em;
+}
+
+.row--ghost td {
+  opacity: 0.2;
+  pointer-events: none;
+  user-select: none;
 }

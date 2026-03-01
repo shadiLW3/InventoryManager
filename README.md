@@ -1,72 +1,110 @@
 # INV▸MGR — Inventory Manager v2
 
-A real-time inventory tracking dashboard with an AI-powered assistant, built with React + Vite.
+Real-time inventory tracking with AI assistant, user accounts, and cloud storage.
 
 ## Features
 
-- **Landing Page** — Marketing site with hero, features grid, CTA, and animated ticker
-- **AI Console** — Chat with Claude about your inventory data with markdown rendering and typing animation
-- **Stock Table** — Full inventory overview with filters, search, edit, and delete
-- **Analytics** — Charts showing stock health, warehouse breakdown, and reorder priorities
-- **CRUD** — Add, edit, and delete inventory items via modal
+- **User Auth** — Email/password signup and login via Firebase
+- **Per-User Data** — Each user gets their own inventory stored in Firestore
+- **AI Console** — Chat with Claude about your inventory (markdown + typing animation)
+- **Stock Table** — Filter, add, edit, delete inventory items
+- **Analytics** — Charts showing stock health, warehouse breakdown, reorder priorities
+- **Real-Time Sync** — Firestore listeners keep everything in sync
 
-## Quick Start
+## Setup
+
+### 1. Install dependencies
 
 ```bash
 npm install
+```
+
+### 2. Firebase setup
+
+1. Go to [console.firebase.google.com](https://console.firebase.google.com)
+2. Create a new project
+3. Add a web app (`</>` icon) and copy the config
+4. Enable **Authentication** → Email/Password
+5. Create a **Firestore Database** in test mode
+
+### 3. Environment variables
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+```
+VITE_ANTHROPIC_API_KEY=sk-ant-api03-your-key
+VITE_FIREBASE_API_KEY=AIza...
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project
+VITE_FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=123456789
+VITE_FIREBASE_APP_ID=1:123456789:web:abc123
+```
+
+### 4. Run
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+### 5. Firestore Security Rules (before going live)
 
-## Environment
-
-Create a `.env` file in the project root:
+In Firebase Console → Firestore → Rules, replace with:
 
 ```
-VITE_ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId}/inventory/{itemId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
 ```
 
-## Build
+## Build & Deploy
 
 ```bash
 npm run build
-npm run preview
 ```
+
+Deploy `dist/` to Vercel, Netlify, or Firebase Hosting.
 
 ## Project Structure
 
 ```
 src/
 ├── main.jsx
-├── App.jsx
+├── App.jsx                    # Auth flow routing
+├── config/
+│   └── firebase.js            # Firebase init
 ├── context/
-│   └── InventoryContext.jsx   # State management + CRUD
+│   ├── AuthContext.jsx         # Auth state
+│   └── InventoryContext.jsx    # Firestore CRUD + real-time sync
 ├── data/
-│   └── inventory.js           # Initial data + constants
+│   └── inventory.js           # Seed data + constants
 ├── components/
-│   ├── ui.jsx                 # Shared components
+│   ├── ui.jsx
 │   ├── Navbar.jsx
 │   ├── LandingPage.jsx
-│   ├── Dashboard.jsx          # Shell with 3 tabs
-│   ├── StockTable.jsx         # Table with filters + actions
-│   ├── ChatPanel.jsx          # AI chat with markdown + typing
-│   ├── Analytics.jsx          # Charts + stats
-│   └── ItemModal.jsx          # Add/edit modal
+│   ├── AuthPage.jsx           # Login/Signup
+│   ├── Dashboard.jsx
+│   ├── StockTable.jsx
+│   ├── ChatPanel.jsx
+│   ├── Analytics.jsx
+│   └── ItemModal.jsx
 └── styles/
     ├── global.css
     ├── navbar.css
     ├── landing.css
+    ├── auth.css
     ├── dashboard.css
     ├── stock-table.css
     ├── chat.css
     ├── modal.css
     └── analytics.css
 ```
-
-## Tech Stack
-
-- React 18 + Vite 6
-- Recharts (charts)
-- Claude API (AI assistant)
-- Bebas Neue + DM Mono + DM Sans

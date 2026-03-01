@@ -7,6 +7,30 @@
   gap: 1.5rem;
 }
 
+.analytics__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 5rem 2rem;
+}
+
+.analytics__empty-title {
+  font-family: var(--display);
+  font-size: 1.8rem;
+  color: #333;
+  letter-spacing: 0.08em;
+}
+
+.analytics__empty-sub {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #444;
+  letter-spacing: 0.06em;
+}
+
 .analytics__stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { useInventory } from '../context/InventoryContext';
+import { useLocations } from '../context/LocationContext';
 import { StatusBadge, StockBar } from './ui';
-import { WAREHOUSES } from '../data/inventory';
 import '../styles/stock-table.css';
 
-const COLUMNS = ["SKU", "Item", "Warehouse", "Qty", "Reorder At", "Level", "Status", ""];
+const COLUMNS = ["SKU", "Item", "Location", "Qty", "Reorder At", "Level", "Status", ""];
 
 export default function StockTable({ onEdit }) {
   const { inventory, deleteItem } = useInventory();
+  const { locations, getLocationName } = useLocations();
   const [filter, setFilter] = useState("all");
-  const [warehouseFilter, setWarehouseFilter] = useState("all");
+  const [locationFilter, setLocationFilter] = useState("all");
   const [confirmDelete, setConfirmDelete] = useState(null);
 
   const filtered = inventory.filter(item => {
@@ -18,8 +19,8 @@ export default function StockTable({ onEdit }) {
       filter === "low" ? (item.qty > 0 && item.qty <= item.reorder) :
       filter === "out" ? item.qty === 0 :
       filter === "ok" ? item.qty > item.reorder : true;
-    const whMatch = warehouseFilter === "all" || item.warehouse === warehouseFilter;
-    return statusMatch && whMatch;
+    const locMatch = locationFilter === "all" || item.location === locationFilter;
+    return statusMatch && locMatch;
   });
 
   function handleDelete(sku) {
@@ -48,16 +49,18 @@ export default function StockTable({ onEdit }) {
               </button>
             ))}
           </div>
-          <select
-            className="stock-table__select"
-            value={warehouseFilter}
-            onChange={e => setWarehouseFilter(e.target.value)}
-          >
-            <option value="all">All Warehouses</option>
-            {WAREHOUSES.map(wh => (
-              <option key={wh} value={wh}>{wh}</option>
-            ))}
-          </select>
+          {locations.length > 0 && (
+            <select
+              className="stock-table__select"
+              value={locationFilter}
+              onChange={e => setLocationFilter(e.target.value)}
+            >
+              <option value="all">All Locations</option>
+              {locations.map(loc => (
+                <option key={loc.id} value={loc.id}>{loc.name}</option>
+              ))}
+            </select>
+          )}
         </div>
       </div>
 
@@ -76,7 +79,7 @@ export default function StockTable({ onEdit }) {
             <tr key={item.sku} className={i % 2 === 1 ? "row--alt" : ""}>
               <td className="cell--sku">{item.sku}</td>
               <td className="cell--name">{item.name}</td>
-              <td className="cell--warehouse">{item.warehouse}</td>
+              <td className="cell--location">{getLocationName(item.location)}</td>
               <td className="cell--qty">{item.qty}</td>
               <td className="cell--reorder">{item.reorder}</td>
               <td><StockBar qty={item.qty} reorder={item.reorder} /></td>
@@ -92,7 +95,28 @@ export default function StockTable({ onEdit }) {
               </td>
             </tr>
           ))}
-          {filtered.length === 0 && (
+
+          {filtered.length === 0 && inventory.length === 0 && (
+            <>
+              {[
+                { sku: "SKU-0001", name: "Your first product", loc: "Add a location first", qty: "—", reorder: "—" },
+                { sku: "SKU-0002", name: "Another item goes here", loc: "Then add items", qty: "—", reorder: "—" },
+                { sku: "SKU-0003", name: "Use the + buttons above", loc: "To get started", qty: "—", reorder: "—" },
+              ].map((g, i) => (
+                <tr key={i} className="row--ghost">
+                  <td className="cell--sku">{g.sku}</td>
+                  <td className="cell--name">{g.name}</td>
+                  <td className="cell--location">{g.loc}</td>
+                  <td className="cell--qty">{g.qty}</td>
+                  <td className="cell--reorder">{g.reorder}</td>
+                  <td><div style={{ height: 3, width: 60, background: 'rgba(255,255,255,0.03)', borderRadius: 2 }} /></td>
+                  <td><span style={{ fontFamily: 'var(--mono)', fontSize: '0.68rem', color: '#2a2a2a', letterSpacing: '0.1em' }}>—</span></td>
+                  <td></td>
+                </tr>
+              ))}
+            </>
+          )}
+          {filtered.length === 0 && inventory.length > 0 && (
             <tr>
               <td colSpan={8} className="stock-table__empty">No items match current filters</td>
             </tr>

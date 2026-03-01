@@ -1,0 +1,144 @@
+.locations {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.locations__toolbar {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.locations__title {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+}
+
+.locations__count {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: #444;
+  letter-spacing: 0.08em;
+}
+
+/* Empty state */
+.locations__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  text-align: center;
+  gap: 0.6rem;
+}
+
+.locations__empty-icon {
+  font-size: 2.5rem;
+  color: rgba(255, 131, 48, 0.2);
+  margin-bottom: 0.5rem;
+}
+
+.locations__empty-title {
+  font-family: var(--display);
+  font-size: 1.8rem;
+  color: #333;
+  letter-spacing: 0.08em;
+}
+
+.locations__empty-sub {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #444;
+  letter-spacing: 0.06em;
+}
+
+.locations__empty-btn {
+  margin-top: 1rem;
+  font-family: var(--mono) !important;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.6rem 1.4rem;
+  border-radius: 2px;
+  background: var(--orange);
+  color: var(--dark);
+  border: 1px solid var(--orange) !important;
+  transition: all 0.15s;
+}
+
+.locations__empty-btn:hover {
+  background: transparent;
+  color: var(--orange);
+}
+
+/* Grid */
+.locations__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.8rem;
+}
+
+/* Card */
+.location-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color 0.15s;
+}
+
+.location-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.location-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.location-card__name {
+  font-family: var(--display);
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+}
+
+.location-card__id {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--orange);
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+
+.location-card__address {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.location-card__notes {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: #555;
+  letter-spacing: 0.04em;
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 2px;
+  line-height: 1.5;
+}
+
+.location-card__actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
