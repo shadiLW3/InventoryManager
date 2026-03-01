@@ -196,3 +196,94 @@
     display: none;
   }
 }
+
+/* Sections */
+.analytics__section {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.2rem;
+}
+
+/* Expiry list */
+.analytics__expiry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.analytics__expiry-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 3px;
+  background: rgba(255, 138, 101, 0.05);
+  border-left: 2px solid rgba(255, 138, 101, 0.3);
+}
+
+.analytics__expiry-item--critical {
+  background: rgba(255, 68, 68, 0.06);
+  border-left-color: rgba(255, 68, 68, 0.4);
+}
+
+.analytics__expiry-item--expired {
+  background: rgba(255, 68, 68, 0.08);
+  border-left-color: #ff4444;
+}
+
+.analytics__expiry-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.analytics__expiry-sku {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--orange);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.analytics__expiry-name {
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.analytics__expiry-qty {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.analytics__expiry-days {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: #ff8a65;
+  flex-shrink: 0;
+  min-width: 60px;
+  text-align: right;
+}
+
+.analytics__expiry-item--expired .analytics__expiry-days {
+  color: #ff4444;
+  font-weight: 500;
+}
+
+.analytics__expiry-item--critical .analytics__expiry-days {
+  color: #ff6666;
+}
+
+/* Reorder cost */
+.analytics__reorder-cost {
+  font-size: 0.58rem;
+  color: var(--orange);
+}

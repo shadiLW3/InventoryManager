@@ -10,7 +10,6 @@ import {
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from './AuthContext';
-import { INITIAL_INVENTORY } from '../data/inventory';
 
 const InventoryContext = createContext();
 
@@ -19,7 +18,6 @@ export function InventoryProvider({ children }) {
   const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Real-time listener on user's inventory collection
   useEffect(() => {
     if (!user) {
       setInventory([]);
@@ -33,24 +31,10 @@ export function InventoryProvider({ children }) {
       const items = snap.docs.map(d => ({ ...d.data(), _id: d.id }));
       setInventory(items);
       setLoading(false);
-
-      // Seed demo data for brand new users (empty collection)
-      if (snap.empty) {
-        seedInventory(user.uid);
-      }
     });
 
     return unsub;
   }, [user]);
-
-  async function seedInventory(uid) {
-    const batch = writeBatch(db);
-    INITIAL_INVENTORY.forEach(item => {
-      const ref = doc(db, 'users', uid, 'inventory', item.sku);
-      batch.set(ref, item);
-    });
-    await batch.commit();
-  }
 
   async function addItem(item) {
     if (!user) return;
@@ -80,22 +64,33 @@ export function InventoryProvider({ children }) {
     const batch = writeBatch(db);
     snap.docs.forEach(d => batch.delete(d.ref));
     await batch.commit();
-    await seedInventory(user.uid);
   }
 
-  function getSystemPrompt() {
-    return `You are an inventory management assistant. You have access to the following live stock data:
+  function getSystemPrompt(locations = [], wasteLog = []) {
+    const inv = inventory.map(({ _id, ...rest }) => rest);
+    const now = new Date().toISOString().split('T')[0];
+    return `You are a grocery store inventory management assistant. Today is ${now}.
 
-${JSON.stringify(inventory.map(({ _id, ...rest }) => rest), null, 2)}
+INVENTORY DATA (${inv.length} items):
+${JSON.stringify(inv, null, 2)}
 
-Fields: sku, name, qty (current quantity), reorder (reorder threshold), unit, location (location ID).
+LOCATIONS (${locations.length}):
+${JSON.stringify(locations.map(({ _id, ...r }) => r), null, 2)}
+
+RECENT WASTE LOG (last 50):
+${JSON.stringify(wasteLog.slice(0, 50).map(({ _id, ...r }) => r), null, 2)}
+
+ITEM FIELDS: sku, name, category, qty, reorder, unit, costPrice, sellPrice, supplier, barcode, expiryDate, location, notes
 
 When answering:
-- Be concise and direct — this is a dashboard tool, not a chat app
+- Be concise and direct — this is a dashboard tool
 - Flag items where qty <= reorder as LOW STOCK or OUT OF STOCK
-- Use the SKU codes when referencing items
+- Flag items expiring within 7 days
+- Calculate margins as (sellPrice - costPrice) / sellPrice * 100
+- Use SKU codes when referencing items
 - Suggest reorder actions when relevant
-- Format with **bold** for emphasis and use line breaks for readability`;
+- If asked about value, calculate qty * costPrice for cost value or qty * sellPrice for retail value
+- Format with **bold** for emphasis and - for bullet lists`;
   }
 
   return (

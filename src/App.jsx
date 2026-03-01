@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { InventoryProvider } from './context/InventoryContext';
 import { LocationProvider } from './context/LocationContext';
+import { ReceivingProvider } from './context/ReceivingContext';
+import { WasteProvider } from './context/WasteContext';
 import LandingPage from './components/LandingPage';
 import AuthPage from './components/AuthPage';
 import Dashboard from './components/Dashboard';
@@ -55,11 +57,15 @@ function AppRouter() {
     return (
       <InventoryProvider>
         <LocationProvider>
-          <Dashboard
-            onBack={() => setPage('landing')}
-            onLogout={logout}
-            userName={user.displayName || user.email?.split('@')[0]}
-          />
+          <ReceivingProvider>
+            <WasteProvider>
+              <Dashboard
+                onBack={() => setPage('landing')}
+                onLogout={logout}
+                userName={user.displayName || user.email?.split('@')[0]}
+              />
+            </WasteProvider>
+          </ReceivingProvider>
         </LocationProvider>
       </InventoryProvider>
     );

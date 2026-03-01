@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
+import { useLocations } from '../context/LocationContext';
+import { useWaste } from '../context/WasteContext';
 import { QUICK_PROMPTS } from '../data/inventory';
 import '../styles/chat.css';
 
@@ -99,6 +101,8 @@ function StaticMessage({ text }) {
 
 export default function ChatPanel() {
   const { inventory, getSystemPrompt } = useInventory();
+  const { locations } = useLocations();
+  const { wasteLog } = useWaste();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -133,7 +137,7 @@ export default function ChatPanel() {
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
           max_tokens: 1000,
-          system: getSystemPrompt(),
+          system: getSystemPrompt(locations, wasteLog),
           messages: newHistory,
         }),
       });

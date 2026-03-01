@@ -15,7 +15,7 @@
   border: 1px solid var(--border);
   border-radius: 4px;
   width: 90%;
-  max-width: 520px;
+  max-width: 480px;
   animation: slideUp 0.2s ease;
 }
 
@@ -160,6 +160,64 @@
   border-radius: 3px;
 }
 
+/* Wide modal for item form */
+.modal--wide {
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Margin display */
+.modal__margin {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: #555;
+  padding: 0.55rem 0.75rem;
+  background: var(--dark);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+.modal__margin--positive {
+  color: #4caf6e;
+}
+
+.modal__margin--negative {
+  color: #ff4444;
+}
+
+/* Info row */
+.modal__info-row {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: #555;
+  letter-spacing: 0.04em;
+  padding: 0.4rem 0;
+}
+
+.modal__info-row strong {
+  color: var(--text);
+}
+
+/* Warn button */
+.modal__btn--warn {
+  background: #ff4444;
+  border-color: #ff4444;
+}
+
+.modal__btn--warn:hover {
+  background: transparent;
+  color: #ff4444;
+}
+
+/* Grow field */
+.modal__field--grow {
+  flex: 1;
+}
+
+/* Overflow fixes */
 .modal__field input,
 .modal__field select {
   width: 100%;
@@ -171,29 +229,26 @@
   overflow: hidden;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 @media (max-width: 500px) {
   .modal {
     width: 95%;
-    padding: 0;
-    overflow: hidden;
     max-height: 90vh;
     overflow-y: auto;
   }
-
-  .modal__header {
-    padding: 1rem 1.2rem;
-  }
-
-  .modal__form {
-    padding: 1.2rem;
-  }
-
   .modal__row {
     grid-template-columns: 1fr;
   }
-
   .modal__row--3 {
-    grid-template-columns: 1fr 1fr 0.7fr;
+    grid-template-columns: 1fr 1fr;
   }
 }

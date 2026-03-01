@@ -1,0 +1,200 @@
+.log-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.log-panel__toolbar {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.log-panel__title {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+}
+
+.log-panel__count {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: #444;
+  letter-spacing: 0.08em;
+}
+
+.log-panel__total-loss {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: #ff4444;
+  letter-spacing: 0.06em;
+  margin-left: auto;
+}
+
+/* Empty state */
+.log-panel__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  text-align: center;
+  gap: 0.6rem;
+}
+
+.log-panel__empty-icon {
+  font-size: 2.5rem;
+  color: rgba(255, 131, 48, 0.2);
+  margin-bottom: 0.5rem;
+}
+
+.log-panel__empty-title {
+  font-family: var(--display);
+  font-size: 1.8rem;
+  color: #333;
+  letter-spacing: 0.08em;
+}
+
+.log-panel__empty-sub {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #444;
+  letter-spacing: 0.06em;
+}
+
+.log-panel__empty-btn {
+  margin-top: 1rem;
+  font-family: var(--mono) !important;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.6rem 1.4rem;
+  border-radius: 2px;
+  background: var(--orange);
+  color: var(--dark);
+  border: 1px solid var(--orange) !important;
+  transition: all 0.15s;
+}
+
+.log-panel__empty-btn:hover {
+  background: transparent;
+  color: var(--orange);
+}
+
+/* List */
+.log-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Entry */
+.log-entry {
+  position: relative;
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.8rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: border-color 0.15s;
+}
+
+.log-entry:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.log-entry--waste {
+  border-left: 2px solid rgba(255, 68, 68, 0.3);
+}
+
+.log-entry__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.log-entry__main {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.log-entry__sku {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--orange);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.log-entry__name {
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.log-entry__qty {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.log-entry__qty--in {
+  color: #4caf6e;
+}
+
+.log-entry__qty--out {
+  color: #ff4444;
+}
+
+.log-entry__details {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: #555;
+  letter-spacing: 0.04em;
+}
+
+.log-entry__reason {
+  color: #ff8a65;
+  text-transform: uppercase;
+}
+
+.log-entry__cost {
+  color: var(--orange);
+}
+
+.log-entry__cost--loss {
+  color: #ff4444;
+}
+
+.log-entry__notes {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: #444;
+  letter-spacing: 0.02em;
+}
+
+/* Delete button positioned top-right */
+.log-entry .action-btn--small {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  font-size: 0.55rem;
+  padding: 0.15rem 0.4rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.log-entry:hover .action-btn--small {
+  opacity: 1;
+}

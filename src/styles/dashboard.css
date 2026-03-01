@@ -25,14 +25,15 @@
 .dashboard__header-left {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
 .dashboard__header-right {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.6rem;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .dashboard__back {
@@ -57,28 +58,27 @@
   gap: 0.8rem;
 }
 
-.dashboard__badge {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  color: #555;
-  letter-spacing: 0.15em;
-}
-
 .dashboard__tabs {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.3rem;
+  flex-wrap: wrap;
 }
 
 .dashboard__tab {
   font-family: var(--mono) !important;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  padding: 0.35rem 0.9rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.6rem;
   border-radius: 2px;
   text-transform: uppercase;
   transition: all 0.15s;
-  color: #666;
+  color: #555;
   border: 1px solid var(--border) !important;
+  white-space: nowrap;
+}
+
+.dashboard__tab:hover {
+  color: #888;
 }
 
 .dashboard__tab--active {
@@ -89,14 +89,15 @@
 
 .dashboard__add-btn {
   font-family: var(--mono) !important;
-  font-size: 0.68rem;
+  font-size: 0.6rem;
   letter-spacing: 0.08em;
-  padding: 0.35rem 0.9rem;
+  padding: 0.3rem 0.7rem;
   border-radius: 2px;
   color: var(--dark);
   background: var(--orange);
   border: 1px solid var(--orange) !important;
   transition: all 0.15s;
+  white-space: nowrap;
 }
 
 .dashboard__add-btn:hover {
@@ -104,30 +105,65 @@
   color: var(--orange);
 }
 
+.dashboard__add-btn--warn {
+  background: #ff4444;
+  border-color: #ff4444 !important;
+}
+
+.dashboard__add-btn--warn:hover {
+  background: transparent;
+  color: #ff4444;
+}
+
 /* Alerts */
 .dashboard__alerts {
-  background: rgba(255, 131, 48, 0.08);
-  border-bottom: 1px solid rgba(255, 131, 48, 0.2);
-  padding: 0.5rem 1.5rem;
+  background: rgba(255, 131, 48, 0.06);
+  border-bottom: 1px solid rgba(255, 131, 48, 0.15);
+  padding: 0.4rem 1.2rem;
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.6rem;
   color: var(--orange);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
   flex-wrap: wrap;
   align-items: center;
 }
 
+.dashboard__alert-label {
+  color: var(--orange);
+  flex-shrink: 0;
+}
+
+.dashboard__alert-label--expiry {
+  color: #ff6666;
+}
+
+.dashboard__alert-divider {
+  color: #333;
+  margin: 0 0.2rem;
+}
+
 .dashboard__alert-tag {
-  background: rgba(255, 131, 48, 0.12);
-  padding: 0.15rem 0.5rem;
+  background: rgba(255, 131, 48, 0.1);
+  padding: 0.12rem 0.4rem;
   border-radius: 2px;
   color: var(--orange);
 }
 
 .dashboard__alert-tag--out {
   color: #ff6666;
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.dashboard__alert-tag--expired {
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.12);
+}
+
+.dashboard__alert-tag--expiring {
+  color: #ff8a65;
+  background: rgba(255, 138, 101, 0.1);
 }
 
 /* Content */
@@ -141,18 +177,18 @@
 .dashboard__user {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-left: 0.5rem;
-  padding-left: 0.8rem;
+  gap: 0.5rem;
+  margin-left: 0.3rem;
+  padding-left: 0.6rem;
   border-left: 1px solid var(--border);
 }
 
 .dashboard__user-name {
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   color: var(--muted);
-  letter-spacing: 0.06em;
-  max-width: 120px;
+  letter-spacing: 0.04em;
+  max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -160,18 +196,18 @@
 
 .dashboard__logout {
   font-family: var(--mono) !important;
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
-  padding: 0.25rem 0.6rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.5rem;
   border-radius: 2px;
-  color: #666;
+  color: #555;
   border: 1px solid var(--border) !important;
   transition: all 0.15s;
 }
 
 .dashboard__logout:hover {
-  color: var(--red);
-  border-color: var(--red) !important;
+  color: #ff4444;
+  border-color: rgba(255, 68, 68, 0.3) !important;
 }
 
 /* Loading */
@@ -194,14 +230,11 @@
   }
   .dashboard__header-right {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
   .dashboard__user {
     border-left: none;
     padding-left: 0;
-    margin-left: 0;
-  }
-  .dashboard__tabs {
-    flex-wrap: wrap;
+    margin-left: auto;
   }
 }

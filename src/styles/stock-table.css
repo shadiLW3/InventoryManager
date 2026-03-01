@@ -22,7 +22,8 @@
 .stock-table__filters {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
 
 .stock-table__filter-group {
@@ -72,9 +73,14 @@
   margin-bottom: 0.8rem;
 }
 
+.stock-table__scroll {
+  overflow-x: auto;
+}
+
 .stock-table__table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 700px;
 }
 
 .stock-table__table thead tr {
@@ -115,19 +121,52 @@
 }
 
 .cell--name {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.cell--supplier {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: #444;
+  letter-spacing: 0.03em;
+  display: block;
 }
 
 .cell--location {
   font-family: var(--mono);
-  font-size: 0.7rem;
-  color: #888;
+  font-size: 0.65rem;
+  color: #666;
 }
 
 .cell--qty {
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 500;
+  white-space: nowrap;
+}
+
+.cell--unit {
+  font-size: 0.58rem;
+  color: #555;
+  font-weight: 400;
+}
+
+.cell--price {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.cell--margin {
+  font-size: 0.55rem;
+  color: #4caf6e;
+  display: block;
 }
 
 .cell--reorder {
