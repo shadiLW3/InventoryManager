@@ -253,3 +253,25 @@
   background: rgba(255, 131, 48, 0.3);
   cursor: not-allowed;
 }
+
+@media (max-width: 640px) {
+  .chat__prompts {
+    padding: 0.6rem 1rem;
+  }
+  .chat__prompt-btn {
+    font-size: 0.58rem;
+    padding: 0.25rem 0.6rem;
+  }
+  .chat__messages {
+    padding: 1rem;
+  }
+  .chat__msg-bubble {
+    max-width: 90%;
+  }
+  .chat__input-bar {
+    padding: 0.75rem 1rem;
+  }
+  .chat__empty-title {
+    font-size: 1.8rem;
+  }
+}

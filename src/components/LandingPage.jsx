@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import { MonoLabel, Logo } from './ui';
-import { TICKER_TEXT, INITIAL_INVENTORY } from '../data/inventory';
+import { TICKER_TEXT } from '../data/inventory';
 import '../styles/landing.css';
 
 const FEATURES = [

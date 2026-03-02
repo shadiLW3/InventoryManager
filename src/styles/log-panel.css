@@ -198,3 +198,12 @@
 .log-entry:hover .action-btn--small {
   opacity: 1;
 }
+
+@media (max-width: 640px) {
+  .log-entry__header {
+    flex-wrap: wrap;
+  }
+  .log-entry__details {
+    gap: 0.4rem;
+  }
+}

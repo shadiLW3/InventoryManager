@@ -229,6 +229,34 @@
   overflow: hidden;
 }
 
+/* Tags */
+.modal__tags {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.modal__tag {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  color: #555;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.modal__tag:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal__tag--active {
+  border-color: currentColor;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

@@ -19,6 +19,93 @@
   letter-spacing: 0.06em;
 }
 
+/* Search */
+.stock-table__search-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 360px;
+  min-width: 180px;
+}
+
+.stock-table__search {
+  width: 100%;
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.4rem 2rem 0.4rem 0.75rem;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  transition: border-color 0.15s;
+}
+
+.stock-table__search:focus {
+  outline: none;
+  border-color: rgba(255, 131, 48, 0.3);
+}
+
+.stock-table__search::placeholder {
+  color: #444;
+}
+
+.stock-table__search-clear {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7rem;
+  color: #555;
+  padding: 0.1rem 0.2rem;
+  transition: color 0.15s;
+}
+
+.stock-table__search-clear:hover {
+  color: var(--text);
+}
+
+/* Sort */
+.stock-table__sort-group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.stock-table__sort-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: #444;
+  letter-spacing: 0.06em;
+  margin-right: 0.15rem;
+}
+
+.stock-table__sort {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.4rem;
+  border-radius: 2px;
+  color: #555;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stock-table__sort:hover {
+  color: var(--muted);
+}
+
+.stock-table__sort--active {
+  color: var(--orange);
+  border-color: rgba(255, 131, 48, 0.2);
+}
+
+.stock-table__sort-arrow {
+  font-size: 0.6rem;
+}
+
 .stock-table__filters {
   display: flex;
   align-items: center;
@@ -229,4 +316,21 @@
   opacity: 0.2;
   pointer-events: none;
   user-select: none;
+}
+
+@media (max-width: 768px) {
+  .stock-table__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .stock-table__search-wrap {
+    max-width: 100%;
+  }
+  .stock-table__filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .stock-table__sort-group {
+    flex-wrap: wrap;
+  }
 }

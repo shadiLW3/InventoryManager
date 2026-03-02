@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useInventory } from '../context/InventoryContext';
 import { useLocations } from '../context/LocationContext';
+import { useVendors } from '../context/VendorContext';
 import { CATEGORIES, UNITS } from '../data/categories';
 import '../styles/modal.css';
 
 export default function ItemModal({ item, onClose }) {
   const { addItem, updateItem } = useInventory();
   const { locations } = useLocations();
+  const { vendors } = useVendors();
   const isEdit = !!item;
 
   const [form, setForm] = useState({
@@ -188,12 +190,25 @@ export default function ItemModal({ item, onClose }) {
           <div className="modal__row">
             <label className="modal__field">
               <span>Supplier</span>
-              <input
-                type="text"
-                value={form.supplier}
-                onChange={e => handleChange('supplier', e.target.value)}
-                placeholder="Vendor name"
-              />
+              {vendors.length > 0 ? (
+                <select
+                  value={form.supplier}
+                  onChange={e => handleChange('supplier', e.target.value)}
+                >
+                  <option value="">— Select —</option>
+                  {vendors.map(v => (
+                    <option key={v.id} value={v.name}>{v.name}</option>
+                  ))}
+                  <option value="__custom">Other (type manually)</option>
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={form.supplier}
+                  onChange={e => handleChange('supplier', e.target.value)}
+                  placeholder="Vendor name"
+                />
+              )}
             </label>
             <label className="modal__field">
               <span>Barcode / UPC</span>
@@ -205,6 +220,20 @@ export default function ItemModal({ item, onClose }) {
               />
             </label>
           </div>
+
+          {/* Custom supplier text input if "Other" is selected */}
+          {form.supplier === '__custom' && (
+            <label className="modal__field">
+              <span>Supplier Name</span>
+              <input
+                type="text"
+                value=""
+                onChange={e => handleChange('supplier', e.target.value)}
+                placeholder="Type vendor name"
+                autoFocus
+              />
+            </label>
+          )}
 
           {/* Row 6: Expiry + Notes */}
           <div className="modal__row">

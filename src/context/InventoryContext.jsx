@@ -66,7 +66,7 @@ export function InventoryProvider({ children }) {
     await batch.commit();
   }
 
-  function getSystemPrompt(locations = [], wasteLog = []) {
+  function getSystemPrompt(locations = [], wasteLog = [], vendors = []) {
     const inv = inventory.map(({ _id, ...rest }) => rest);
     const now = new Date().toISOString().split('T')[0];
     return `You are a grocery store inventory management assistant. Today is ${now}.
@@ -77,10 +77,14 @@ ${JSON.stringify(inv, null, 2)}
 LOCATIONS (${locations.length}):
 ${JSON.stringify(locations.map(({ _id, ...r }) => r), null, 2)}
 
+VENDORS (${vendors.length}):
+${JSON.stringify(vendors.map(({ _id, ...r }) => r), null, 2)}
+
 RECENT WASTE LOG (last 50):
 ${JSON.stringify(wasteLog.slice(0, 50).map(({ _id, ...r }) => r), null, 2)}
 
 ITEM FIELDS: sku, name, category, qty, reorder, unit, costPrice, sellPrice, supplier, barcode, expiryDate, location, notes
+VENDOR FIELDS: id, name, contact, email, phone, address, leadTimeDays, minOrder, categories, notes
 
 When answering:
 - Be concise and direct — this is a dashboard tool
@@ -88,7 +92,8 @@ When answering:
 - Flag items expiring within 7 days
 - Calculate margins as (sellPrice - costPrice) / sellPrice * 100
 - Use SKU codes when referencing items
-- Suggest reorder actions when relevant
+- When asked about vendors, include contact info and lead times
+- Suggest reorder actions when relevant, including vendor to order from
 - If asked about value, calculate qty * costPrice for cost value or qty * sellPrice for retail value
 - Format with **bold** for emphasis and - for bullet lists`;
   }
